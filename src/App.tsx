@@ -10,7 +10,7 @@ import {
   ErrorComponent,
 } from "@pankod/refine-mui";
 import {
-  AccountCircleOutlined, ChatBubbleOutlined, Dashboard, PeopleAltOutlined, StarOutlineRounded, VillaOutlined,
+  AccountCircleOutlined, ChatBubbleOutlined, PeopleAltOutlined, StarOutlineRounded, VillaOutlined,
 } from '@mui/icons-material';
 import dataProvider from "@pankod/refine-simple-rest";
 import { MuiInferencer } from "@pankod/refine-inferencer/mui";
@@ -102,22 +102,25 @@ function App() {
           catchAll={<ErrorComponent />}
           resources={[
             {
-              name: "property",
-              list: MuiInferencer,
-              icon: <VillaOutlined/>
+              name: "properties",
+              list: AllProperties,
+              show: PropertyDetails,
+              create: CreateProperty,
+              edit: EditProperty,
+              icon: <VillaOutlined/>,
             },
             {
-              name: "agent",
+              name: "agents",
               list: MuiInferencer,
               icon: <PeopleAltOutlined/>
             },
             {
-              name: "review",
+              name: "reviews",
               list: MuiInferencer,
               icon: <StarOutlineRounded/>
             },
             {
-              name: "message",
+              name: "messages",
               list: MuiInferencer,
               icon: <ChatBubbleOutlined/>
             },
