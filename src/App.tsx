@@ -40,23 +40,37 @@ axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
 
 function App() {
   const authProvider: AuthProvider = {
-    login: ({ credential }: CredentialResponse) => {
+    login: async({ credential }: CredentialResponse) => {
       const profileObj = credential ? parseJwt(credential) : null;
-
       if (profileObj) {
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            ...profileObj,
+        const response = await fetch("http://localhost:8080/api/v1/users", {
+          method: "POST",
+          headers: { "Content-Type" : "application/json"},
+          body: JSON.stringify({
+            name: profileObj.name,
+            email: profileObj.email,
             avatar: profileObj.picture,
           })
-        );
+        })
+        const data = await response.json()
+        if (response.status === 200) {
+                  localStorage.setItem(
+                    "user",
+                    JSON.stringify({
+                      ...profileObj,
+                      avatar: profileObj.picture,
+                      userid: data._id,
+                    })
+                  );
+        } else {
+           return Promise.reject()
+        }
       }
-
       localStorage.setItem("token", `${credential}`);
 
       return Promise.resolve();
     },
+
     logout: () => {
       const token = localStorage.getItem("token");
 
@@ -96,7 +110,7 @@ function App() {
       <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
       <RefineSnackbarProvider>
         <Refine
-          dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
+          dataProvider={dataProvider("http://localhost:8080/api/v1")}
           notificationProvider={notificationProvider}
           ReadyPage={ReadyPage}
           catchAll={<ErrorComponent />}
@@ -107,30 +121,31 @@ function App() {
               show: PropertyDetails,
               create: CreateProperty,
               edit: EditProperty,
-              icon: <VillaOutlined/>,
+              icon: <VillaOutlined />,
             },
             {
               name: "agents",
               list: MuiInferencer,
-              icon: <PeopleAltOutlined/>
+              show: AgentProfile,
+              icon: <PeopleAltOutlined />,
             },
             {
               name: "reviews",
               list: MuiInferencer,
-              icon: <StarOutlineRounded/>
+              icon: <StarOutlineRounded />,
             },
             {
               name: "messages",
               list: MuiInferencer,
-              icon: <ChatBubbleOutlined/>
+              icon: <ChatBubbleOutlined />,
             },
             {
               name: "my-profile",
               options: {
-                label: 'My Profile'
+                label: "My Profile",
               },
               list: MuiInferencer,
-              icon: <AccountCircleOutlined/>
+              icon: <AccountCircleOutlined />,
             },
           ]}
           Title={Title}
