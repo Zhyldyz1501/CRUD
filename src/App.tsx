@@ -43,7 +43,7 @@ function App() {
     login: async({ credential }: CredentialResponse) => {
       const profileObj = credential ? parseJwt(credential) : null;
       if (profileObj) {
-        const response = await fetch("http://localhost:8080/api/v1/users", {
+        const response = await fetch("http://localhost:8080/users", {
           method: "POST",
           headers: { "Content-Type" : "application/json"},
           body: JSON.stringify({
@@ -110,7 +110,7 @@ function App() {
       <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
       <RefineSnackbarProvider>
         <Refine
-          dataProvider={dataProvider("http://localhost:8080/api/v1")}
+          dataProvider={dataProvider("http://localhost:8080")}
           notificationProvider={notificationProvider}
           ReadyPage={ReadyPage}
           catchAll={<ErrorComponent />}
@@ -131,7 +131,7 @@ function App() {
             },
             {
               name: "reviews",
-              list: MuiInferencer,
+              list: Home,
               icon: <StarOutlineRounded />,
             },
             {
@@ -144,7 +144,7 @@ function App() {
               options: {
                 label: "My Profile",
               },
-              list: MuiInferencer,
+              list: MyProfile,
               icon: <AccountCircleOutlined />,
             },
           ]}

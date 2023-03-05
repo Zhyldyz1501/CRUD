@@ -1,7 +1,7 @@
 
 /* eslint-disable no-restricted-globals */
 import { Typography, Box, Stack } from "@pankod/refine-mui";
-import { useDelete, useGetIdentity, useShow } from "@pankod/refine-core";
+import { useDelete, useGetIdentity, useShow, useOne } from "@pankod/refine-core";
 import { useParams, useNavigate } from "@pankod/refine-react-router-v6";
 import {
     ChatBubble,
@@ -23,13 +23,16 @@ function checkImage(url: any) {
 const PropertyDetails = () => {
     const navigate = useNavigate();
     const { data: user } = useGetIdentity();
-    const { queryResult } = useShow();
     const { mutate } = useDelete();
     const { id } = useParams();
 
-    const { data, isLoading, isError } = queryResult;
+    const { data, isLoading, isError } = useOne({
+    resource: "properties",
+    id: id as string,
+  });
+  console.log(data)
+  const propertyDetails = data?.data ?? [];
 
-    const propertyDetails = data?.data ?? {};
 
     if (isLoading) {
         return <div>Loading...</div>;
