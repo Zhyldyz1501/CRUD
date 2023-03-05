@@ -3,7 +3,8 @@ import { useList } from '@pankod/refine-core';
 import { PieChart, PropertyReferrals, TotalRevenue, PropertyCard, TopAgent } from 'components';
 import {Typography, Box, Stack} from '@pankod/refine-mui'
 
-const home = () => {
+const Home = () => {
+
   return (
     <Box>
       <Typography fontSize={25} fontWeight={700} color='#11142D'>
@@ -30,4 +31,4 @@ const home = () => {
   )
 }
 
-export default home;
+export default Home;

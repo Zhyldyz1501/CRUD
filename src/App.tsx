@@ -125,7 +125,7 @@ function App() {
             },
             {
               name: "agents",
-              list: MuiInferencer,
+              list: Agents,
               show: AgentProfile,
               icon: <PeopleAltOutlined />,
             },

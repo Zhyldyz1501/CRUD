@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Add } from '@mui/icons-material';
-import { isError, useList, useTable } from '@pankod/refine-core';
+import {  useTable } from '@pankod/refine-core';
 import { Box, Stack, Typography, TextField, Select, MenuItem } from '@pankod/refine-mui';
 import { useNavigate } from '@pankod/refine-react-router-v6';
 import { PropertyCard, CustomButton } from 'components';
